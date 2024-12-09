@@ -1,6 +1,9 @@
 import unittest
 
+from signal_periodizer.error import PeriodOutOfBoundError
 from signal_periodizer.periodizer import SignalPeriodizer
+
+
 
 
 class TestSignalPeriodizer(unittest.TestCase):
@@ -37,7 +40,12 @@ class TestSignalPeriodizer(unittest.TestCase):
         self.assertEqual(900, sut2[0])
         self.assertEqual(999, sut2[99])
 
+    def test_periodizer_raise_error_when_period_is_out_of_bound(self):
+        periodizer = SignalPeriodizer(point_per_period=100)
+        signal = [float(i) for i in range(1050)]
 
+        with self.assertRaises(PeriodOutOfBoundError):
+            _ = periodizer.period_for(signal=signal, n_of_period=100)
 
 
 
