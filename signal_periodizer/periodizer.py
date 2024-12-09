@@ -11,3 +11,6 @@ class SignalPeriodizer(SignalPeriodizerInterface):
         starting_point = n_of_period * self._point_per_period
         ending_point = starting_point + self._point_per_period
         return signal[starting_point:ending_point]
+
+    def last_period_for(self, signal: List[float]) -> int:
+        return (len(signal) // self._point_per_period) - 1
