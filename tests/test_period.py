@@ -14,3 +14,13 @@ class TestSignalPeriodizer(unittest.TestCase):
         self.assertEqual(0, sut[0])
         self.assertEqual(99, sut[99])
 
+    def test_periodize_return_the_right_period(self):
+        periodizer = SignalPeriodizer(point_per_period=100)
+        signal = [float(i) for i in range(1000)]
+
+        sut = periodizer.period_for(signal=signal, n_of_period=1)
+
+        self.assertEqual(100, len(sut))
+        self.assertEqual(100, sut[0])
+        self.assertEqual(199, sut[99])
+
