@@ -4,6 +4,8 @@ from matplotlib.widgets import Slider
 from mne.io import read_raw_edf
 from scipy.signal import welch
 
+from fft_func import compute_frequency_analysis
+
 file_path = "01IS-1-ADP.edf"
 raw = read_raw_edf(file_path, preload=True)
 print(raw.info)
@@ -12,31 +14,6 @@ signal = raw.get_data(picks="eeg")[0]  # Tout le signal
 
 window_size = sfreq * 10  # secondes
 start = 0
-
-def fft(signal):
-    N = len(signal)
-    real = [0] * N
-    imag = [0] * N
-    for k in range(N):
-        for n in range(N):
-            angle = 2 * math.pi * k * n / N
-            real[k] += signal[n] * math.cos(angle)
-            imag[k] -= signal[n] * math.sin(angle)
-    magnitude = [math.sqrt(r ** 2 + i ** 2) for r, i in zip(real, imag)]
-    return magnitude[:N // 2]
-
-def calculate_frequencies(N, sampling_rate):
-    return [(sampling_rate * k) / N for k in range(N // 2)]
-
-def compute_welch(signal, sampling_rate):
-    frequencies, power = welch(signal, fs=sampling_rate, nperseg=sampling_rate*5)
-    return frequencies, power
-
-def compute_frequency_analysis(current_signal, sfreq):
-    # power = fft(current_signal)
-    # frequencies = calculate_frequencies(len(current_signal), sfreq)
-    frequencies, power = compute_welch(current_signal, sfreq)
-    return frequencies, power
 
 def update_graph(start):
     end = start + window_size
