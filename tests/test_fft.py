@@ -1,8 +1,6 @@
 import math
 import unittest
 
-from matplotlib import pyplot as plt
-
 from fft_analyser.homebrew import FftHomebrew
 from fft_analyser.welch import FftWelch
 

@@ -4,8 +4,6 @@ from signal_periodizer.error import PeriodOutOfBoundError
 from signal_periodizer.periodizer import SignalPeriodizer
 
 
-
-
 class TestSignalPeriodizer(unittest.TestCase):
     def test_periodize_return_number_of_point_define_in_init(self):
         periodizer = SignalPeriodizer(point_per_period=100)
